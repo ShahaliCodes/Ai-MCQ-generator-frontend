@@ -3,7 +3,8 @@ import FileUploader from "../components/FileUploader";
 export default function Home() {
   const handleFileUpload = (file) => {
     console.log("File received:", file);
-    // You can call your backend here
+    // 👇 Don't render file object directly to JSX
+    // You can save file info in state if needed
   };
 
   return (
