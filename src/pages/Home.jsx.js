@@ -25,7 +25,15 @@ export default function Home() {
       formData.append('file', file);
 
       const response = await uploadFile(formData);
-      navigate('/results', { state: { questions: response.questions, filename: file.name } });
+
+      // ✅ Validate response before using
+      if (!response || !Array.isArray(response.questions)) {
+        throw new Error('Server did not return valid questions');
+      }
+
+      navigate('/results', {
+        state: { questions: response.questions, filename: file.name },
+      });
     } catch (err) {
       setError(err.message || 'Failed to process file');
     } finally {
