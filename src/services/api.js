@@ -9,8 +9,11 @@ export const uploadFile = async (formData) => {
         'Content-Type': 'multipart/form-data',
       },
     });
+
+    console.log('[uploadFile] Response:', response.data); // ✅ Debug log
     return response.data;
   } catch (error) {
+    console.error('[uploadFile] Error:', error); // ✅ Debug log
     throw new Error(error.response?.data?.detail || 'Failed to upload file');
   }
 };
