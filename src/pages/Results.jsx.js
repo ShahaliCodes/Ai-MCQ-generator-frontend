@@ -5,14 +5,9 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 export default function Results() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { questions, filename } = location.state || {};
 
-  // Extract questions safely regardless of nested shape
-  const rawQuestions = location.state?.questions;
-  const questions = rawQuestions?.questions || rawQuestions || [];
-  const filename = location.state?.filename || 'Unknown';
-
-  console.log("Questions received:", questions);
-
+  // If no valid questions array or not an array
   if (!Array.isArray(questions) || questions.length === 0) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
@@ -42,7 +37,7 @@ export default function Results() {
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Generated Questions</h1>
-        <p className="text-gray-600">From: {filename}</p>
+        <p className="text-gray-600">From: {typeof filename === 'string' ? filename : 'Unknown file'}</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
