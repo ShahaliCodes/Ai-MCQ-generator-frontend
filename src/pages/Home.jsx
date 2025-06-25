@@ -15,7 +15,7 @@ export default function Home() {
     formData.append("file", file);
 
     try {
-      const response = await fetch("https://your-backend.onrender.com/upload/", {
+      const response = await fetch("https://ai-mcq-generator-xo0f.onrender.com", {
         method: "POST",
         body: formData,
       });
