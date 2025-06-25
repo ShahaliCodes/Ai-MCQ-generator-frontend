@@ -1,1 +1,0 @@
-// Results page to show questions
