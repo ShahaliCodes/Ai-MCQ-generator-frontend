@@ -7,8 +7,7 @@ export default function Results() {
   const navigate = useNavigate();
   const { questions, filename } = location.state || {};
 
-  // If no valid questions array or not an array
-  if (!Array.isArray(questions) || questions.length === 0) {
+  if (!questions || !Array.isArray(questions)) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
         <h2 className="text-xl font-medium text-gray-900 mb-4">No questions found</h2>
@@ -17,7 +16,7 @@ export default function Results() {
         </p>
         <button
           onClick={() => navigate('/')}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-primary hover:bg-primary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           Go Back
         </button>
@@ -29,7 +28,7 @@ export default function Results() {
     <div className="max-w-4xl mx-auto px-4 py-12">
       <button
         onClick={() => navigate('/')}
-        className="flex items-center text-primary hover:text-primary-dark mb-6"
+        className="flex items-center text-blue-600 hover:text-blue-800 mb-6"
       >
         <ArrowLeftIcon className="h-5 w-5 mr-1" />
         Back to upload
@@ -37,7 +36,7 @@ export default function Results() {
 
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-1">Generated Questions</h1>
-        <p className="text-gray-600">From: {typeof filename === 'string' ? filename : 'Unknown file'}</p>
+        <p className="text-gray-600">From: {String(filename)}</p>
       </div>
 
       <div className="bg-white rounded-lg shadow-md overflow-hidden">
@@ -46,8 +45,8 @@ export default function Results() {
 
       <div className="mt-6 text-center">
         <button
-          onClick={() => window.location.href = '/'}
-          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-secondary hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
+          onClick={() => window.location.reload()}
+          className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
         >
           Generate New Set
         </button>
