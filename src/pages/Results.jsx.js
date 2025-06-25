@@ -5,9 +5,15 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 export default function Results() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { questions, filename } = location.state || {};
 
-  if (!questions) {
+  // Extract questions safely regardless of nested shape
+  const rawQuestions = location.state?.questions;
+  const questions = rawQuestions?.questions || rawQuestions || [];
+  const filename = location.state?.filename || 'Unknown';
+
+  console.log("Questions received:", questions);
+
+  if (!Array.isArray(questions) || questions.length === 0) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-12 text-center">
         <h2 className="text-xl font-medium text-gray-900 mb-4">No questions found</h2>
@@ -45,7 +51,7 @@ export default function Results() {
 
       <div className="mt-6 text-center">
         <button
-          onClick={() => window.location.reload()}
+          onClick={() => window.location.href = '/'}
           className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-secondary hover:bg-secondary-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-secondary"
         >
           Generate New Set
