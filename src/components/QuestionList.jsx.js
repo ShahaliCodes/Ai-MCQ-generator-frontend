@@ -14,32 +14,48 @@ export default function QuestionList({ questions }) {
   return (
     <ul className="divide-y divide-gray-200">
       {questions.map((question, index) => {
-        const selectedOption = selectedOptions[question.id];
+        const questionId = typeof question.id === 'string' ? question.id : String(question.id);
+        const questionText =
+          typeof question.text === 'string' ? question.text : JSON.stringify(question.text);
+        const explanation =
+          typeof question.explanation === 'string'
+            ? question.explanation
+            : JSON.stringify(question.explanation);
+
+        const selectedOption = selectedOptions[questionId];
         const correctOption = question.options.find((opt) => opt.is_correct)?.id;
         const isAnswered = selectedOption !== undefined;
         const isCorrect = isAnswered && selectedOption === correctOption;
 
         return (
-          <li key={String(question.id)} className="p-6">
+          <li key={questionId} className="p-6">
             <div className="flex items-start">
               <span className="flex-shrink-0 bg-blue-600 rounded-full h-6 w-6 flex items-center justify-center text-white font-medium text-sm mr-3">
                 {index + 1}
               </span>
               <div className="flex-1">
-                <h3 className="text-lg font-medium text-gray-900">{String(question.text)}</h3>
+                <h3 className="text-lg font-medium text-gray-900">{questionText}</h3>
 
                 <fieldset className="mt-4">
                   <legend className="sr-only">Question options</legend>
                   <div className="space-y-3">
                     {question.options.map((option) => {
-                      const isSelected = selectedOption === option.id;
+                      const optionId =
+                        typeof option.id === 'string' ? option.id : String(option.id);
+                      const optionText =
+                        typeof option.text === 'string'
+                          ? option.text
+                          : JSON.stringify(option.text);
+                      const isSelected = selectedOption === optionId;
                       const showCorrect = isAnswered && option.is_correct;
                       const showIncorrect = isAnswered && isSelected && !option.is_correct;
 
                       return (
                         <div
-                          key={String(option.id)}
-                          onClick={() => !isAnswered && handleOptionSelect(question.id, option.id)}
+                          key={optionId}
+                          onClick={() =>
+                            !isAnswered && handleOptionSelect(questionId, optionId)
+                          }
                           className={`relative rounded-lg border px-4 py-3 cursor-pointer ${
                             isSelected ? 'border-blue-600 bg-blue-50' : 'border-gray-300'
                           } ${showCorrect ? 'border-green-500 bg-green-50' : ''} ${
@@ -47,8 +63,8 @@ export default function QuestionList({ questions }) {
                           } ${isAnswered ? 'cursor-default' : 'hover:border-blue-600'}`}
                         >
                           <div className="flex items-center">
-                            <span className="font-medium mr-2">{String(option.id)})</span>
-                            <span>{String(option.text)}</span>
+                            <span className="font-medium mr-2">{optionId})</span>
+                            <span>{optionText}</span>
                             {showCorrect && (
                               <span className="ml-auto flex-shrink-0 text-green-600">
                                 <CheckIcon className="h-5 w-5" />
@@ -73,7 +89,7 @@ export default function QuestionList({ questions }) {
                     }`}
                   >
                     <p className="font-medium">{isCorrect ? 'Correct!' : 'Incorrect'}</p>
-                    <p className="mt-1 text-sm">{String(question.explanation)}</p>
+                    <p className="mt-1 text-sm">{explanation}</p>
                   </div>
                 )}
               </div>
