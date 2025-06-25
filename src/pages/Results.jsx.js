@@ -5,7 +5,10 @@ import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 export default function Results() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { questions, filename } = location.state || {};
+
+  // ✅ Safe optional chaining
+  const questions = location.state?.questions;
+  const filename = location.state?.filename;
 
   if (!questions || !Array.isArray(questions)) {
     return (
